@@ -8,10 +8,22 @@
 </head>
 <body>
     <script src="./index.js"></script>
+    <fieldset> <!--Unused Right now-->
+        <legend>Endpoint</legend>
+        
+        <div>
+            <input type="radio" id="queryBtn" value="query" name="endpoint" checked />
+            <label for="queryBtn">Query</label>
+        </div>
+        
+        <div>
+            <input type="radio" id="cselectBtn" value="cselect" name="endpoint" />
+            <label for="cselectBtn">Complex Select</label>
+        </div>
+    </fieldset>
     <textarea id="query" style="display: block;">Insert Query Here</textarea>
     <button id="submit">Submit</button>
     <table id="queryResult">
-        
     </table>
 </body>
 </html>
