@@ -3,27 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Test</title>
+    <title>CSE 335 Project</title>
 </head>
 <body>
-    <script src="./build/index.js"></script>
-    <fieldset> <!--Unused Right now-->
-        <legend>Endpoint</legend>
+    <script type="module" src="./build/index.js"></script>
+    <div id="sidebar">
+        <h1>Views</h1>
 
-        <div>
-            <input type="radio" id="queryBtn" value="query" name="endpoint" checked />
-            <label for="queryBtn">Query</label>
+        <div class="view-folder">
+            <h2>Presets</h2>
+            <ul class="view-folder" id="preset-list">
+            </ul>
         </div>
-        
-        <div>
-            <input type="radio" id="cselectBtn" value="cselect" name="endpoint" />
-            <label for="cselectBtn">Complex Select</label>
+
+        <div class="view-folder">
+            <h2>Custom</h2>
+            <ul class="view-folder">
+                <li><span id="custom-query">Run Custom Query</span></li>
+                <li><span id="new-view">+ Add New View</span></li>
+            </ul>
         </div>
-    </fieldset>
-    <textarea id="query" style="display: block;">Insert Query Here</textarea>
-    <button id="submit">Submit</button>
-    <table id="queryResult">
-    </table>
+    </div>
+    <div id="table"></div>
 </body>
 </html>
