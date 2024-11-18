@@ -1,14 +1,31 @@
-import TableManager from "./table-manager";
+import TableManager from "./table-manager.js";
+import Form from './form.js';
+import {FormStructure} from "./form.js";
 
 export type View = {
     name: string;
     endpoint: string;
+    form?: FormStructure
 };
 
 const presets: Array<View> = [
     {
         name: 'Complex Select',
         endpoint: 'cselect'
+    },
+    {
+        name: 'Custom Query',
+        endpoint: 'query',
+        form: {
+            header: 'Custom Query',
+            fields : [
+                {
+                    name: 'query',
+                    type: 'text',
+                    label: 'Query:'
+                }
+            ]
+        }
     }
 ]
 
@@ -53,16 +70,31 @@ export default class ViewManager {
     async OnViewPress(view: View) {
         if (view == this.currentView) return;
         
-        this.tMan.ClearTable();
-        let options = undefined
+        if (view.form) {
+            const form = view.form ? new Form(view.form) : undefined;
+            // Override form submission
+            
+            form?.formRoot.addEventListener('submit', (e) => {
+                const data = new FormData(e.target! as HTMLFormElement);
+                this.FillViewTable(view, data);
+                e.preventDefault();
+                form.DeleteForm();
+            });
 
-        if (view.name == 'test') options = {query: 'SELECT * FROM genres'};
-        else if (view.name == 'test2') options = {query: 'SELECT * FROM foo'};
+            return;
+        }
+
+        this.FillViewTable(view);
+        
+    }
+
+    async FillViewTable(view: View, options?: object | FormData ) {
+        this.tMan.ClearTable();
+
+        if (options instanceof FormData) options = Object.fromEntries(options);
 
         const data = await this.tMan.GetData(view.endpoint, options);
-        console.log(data);
         this.tMan.FillTable(data);
-
         this.currentView = view;
     }
 };
