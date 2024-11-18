@@ -61,11 +61,11 @@ export default class ViewManager {
     }
     async FillViewTable(view, options) {
         this.tMan.ClearTable();
+        this.currentView = view;
         if (options instanceof FormData)
             options = Object.fromEntries(options);
         const data = await this.tMan.GetData(view.endpoint, options);
         this.tMan.FillTable(data);
-        this.currentView = view;
     }
 }
 ;
