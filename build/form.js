@@ -3,14 +3,20 @@ export default class Form {
     constructor(structure) {
         this.formIDs = [];
         this.structure = structure;
-        this.formRoot = document.createElement('form');
+        this.pageBlocker = document.createElement('div');
+        this.pageBlocker.setAttribute('class', 'page-block');
+        this.formRoot = document.createElement('div');
+        this.formRoot.setAttribute('class', 'modal');
+        this.pageBlocker.appendChild(this.formRoot);
+        this.form = document.createElement('form');
+        this.formRoot.appendChild(this.form);
         this.GenerateForm();
     }
     GenerateForm() {
-        this.formRoot.innerHTML = '';
+        this.form.innerHTML = '';
         const header = document.createElement('h1');
         header.textContent = this.structure.header;
-        this.formRoot.appendChild(header);
+        this.form.appendChild(header);
         this.structure.fields.forEach((field, i) => {
             var _a;
             const id = this.GenerateID();
@@ -27,15 +33,15 @@ export default class Form {
             input.setAttribute('name', field.name);
             // Do switch for different types of inputs here
             container.appendChild(input);
-            this.formRoot.appendChild(container);
+            this.form.appendChild(container);
         });
         // Create submit button
         const submit = document.createElement('input');
         submit.setAttribute('type', 'submit');
         submit.textContent = 'Submit';
-        this.formRoot.appendChild(submit);
+        this.form.appendChild(submit);
         // Add Form to page
-        document.body.appendChild(this.formRoot);
+        document.body.appendChild(this.pageBlocker);
     }
     GenerateID() {
         let id;
@@ -48,6 +54,6 @@ export default class Form {
     }
     DeleteForm() {
         UsedIDs = UsedIDs.filter((val) => { return !(val in this.formIDs); });
-        this.formRoot.remove();
+        this.pageBlocker.remove();
     }
 }

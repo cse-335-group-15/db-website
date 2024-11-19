@@ -17,22 +17,32 @@ let UsedIDs: Array<string> = [];
 
 export default class Form {
     structure: FormStructure;
-    formRoot: HTMLFormElement;
+    pageBlocker: HTMLDivElement;
+    formRoot: HTMLDivElement;
+    form: HTMLFormElement;
     formIDs: Array<string> = [];
 
     constructor(structure: FormStructure) {
         this.structure = structure;
-        this.formRoot = document.createElement('form');
+        this.pageBlocker = document.createElement('div');
+        this.pageBlocker.setAttribute('class', 'page-block');
+
+        this.formRoot = document.createElement('div');
+        this.formRoot.setAttribute('class', 'modal');
+        this.pageBlocker.appendChild(this.formRoot);
+
+        this.form = document.createElement('form');
+        this.formRoot.appendChild(this.form);
 
         this.GenerateForm();
     }
 
     GenerateForm () {
-        this.formRoot.innerHTML = '';
+        this.form.innerHTML = '';
         
         const header = document.createElement('h1');
         header.textContent = this.structure.header;
-        this.formRoot.appendChild(header);
+        this.form.appendChild(header);
 
         this.structure.fields.forEach((field: FormField, i: Number) => {
             const id = this.GenerateID();
@@ -53,7 +63,7 @@ export default class Form {
             // Do switch for different types of inputs here
         
             container.appendChild(input);   
-            this.formRoot.appendChild(container);
+            this.form.appendChild(container);
         });
         
 
@@ -61,10 +71,10 @@ export default class Form {
         const submit = document.createElement('input');
         submit.setAttribute('type', 'submit');
         submit.textContent = 'Submit';
-        this.formRoot.appendChild(submit);
+        this.form.appendChild(submit);
         
         // Add Form to page
-        document.body.appendChild(this.formRoot);
+        document.body.appendChild(this.pageBlocker);
     }
 
     GenerateID() {
@@ -72,6 +82,7 @@ export default class Form {
         do {
             id = Date.now().toString(36) + Math.random().toString(36).substring(2);
         } while (id in UsedIDs)
+
         UsedIDs.push(id);
         this.formIDs.push(id);
         return id;
@@ -80,7 +91,7 @@ export default class Form {
     DeleteForm() {
         UsedIDs = UsedIDs.filter((val) => {return !(val in this.formIDs)})
         
-        this.formRoot.remove();
+        this.pageBlocker.remove();
     }
 }
 
