@@ -17,7 +17,7 @@ export default class TableManager {
     async GetData(endpoint: string, options?: object): Promise<sqlTable> {
         let request = {
             method: 'POST',
-            body: JSON.stringify(options)
+            body: JSON.stringify(options ?? {})
         };
 
         let response = await fetch(`${url}/${endpoint}`, request);

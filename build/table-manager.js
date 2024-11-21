@@ -10,7 +10,7 @@ export default class TableManager {
     async GetData(endpoint, options) {
         let request = {
             method: 'POST',
-            body: JSON.stringify(options)
+            body: JSON.stringify(options !== null && options !== void 0 ? options : {})
         };
         let response = await fetch(`${url}/${endpoint}`, request);
         return response.json();
