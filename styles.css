@@ -25,6 +25,12 @@ tr:nth-child(even) {
     background-color: lightgray;
 }
 
+th {
+    background-color: #f7f7f7;
+    border: 2px solid black;
+    padding: 0.15vw;
+}
+
 #result {
     margin: 0;
     padding: 0;

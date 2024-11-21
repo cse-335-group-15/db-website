@@ -66,7 +66,8 @@ export default class ViewManager {
         if (options instanceof FormData)
             options = Object.fromEntries(options);
         const data = await this.tMan.GetData(view.endpoint, options);
-        this.tMan.FillTable(data);
+        this.tMan.SetColumns(data.columns);
+        this.tMan.FillTable(data.data);
     }
 }
 ;

@@ -15,6 +15,25 @@ export default class TableManager {
         let response = await fetch(`${url}/${endpoint}`, request);
         return response.json();
     }
+    SetColumns(columns) {
+        const table = document.getElementById('result');
+        const thead = table.getElementsByTagName('thead')[0];
+        thead.innerHTML = "";
+        const rowEl = thead.insertRow();
+        columns.forEach((data, i) => {
+            let cell = rowEl.insertCell(i);
+            let nameExp = /(?:[\w\d]+_?)+/;
+            let name = data[0];
+            if (typeof name == 'string' && nameExp.test(name)) {
+                let tokens = name.split('_');
+                name = '';
+                tokens.forEach((token) => {
+                    name += token[0].toUpperCase() + token.slice(1) + ' ';
+                });
+            }
+            cell.outerHTML = `<th>${name ? name.toString() : ''}`;
+        });
+    }
     FillTable(data) {
         const table = document.getElementById('result');
         data.forEach((row, i) => {
@@ -25,7 +44,8 @@ export default class TableManager {
     AddRow(row, location, table) {
         if (!table)
             table = document.getElementById('result');
-        let rowEl = table.insertRow(location);
+        const tbody = table.getElementsByTagName('tbody')[0];
+        const rowEl = tbody.insertRow(location);
         row.forEach((data, i) => {
             let cell = rowEl.insertCell(i);
             cell.innerText = data ? data.toString() : '';
