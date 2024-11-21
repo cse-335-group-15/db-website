@@ -1,7 +1,57 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#container {
+    display: flex;
+    flex: auto;
+    flex-direction: row;
+}
+
+#table-container {
+    flex: auto;
+    flex-basis: 87.5%;
+
+    padding: 1vw;
+}
+
+td {
+    border: 2px solid black;
+    padding: 0.15vw;
+}
+
+tr:nth-child(even) {
+    background-color: lightgray;
+}
+
+#result {
+    margin: 0;
+    padding: 0;
+    
+    border-collapse: collapse;
+}
+
+#sidebar {
+    flex: auto;
+    flex-basis: 12.5%;
+    position: sticky;
+    left: 0;
+    top: 0;
+
+    background-color: #f7f7f7;
+    height: 100vh;
+
+    padding-left: 1vw;
+    border-right-style: solid;
+    border-color: grey;
+    
+}
+
 .modal {
     width: 50%;
     height: 75%;
-    position:fixed;
+    position: fixed;
     top: 12.5%;
     left: 25%;
     
@@ -11,6 +61,8 @@
     border-style: solid;
     border-radius: 2px;
     border-color: grey;
+
+    padding: 1vh 1vw;
     
 }
 

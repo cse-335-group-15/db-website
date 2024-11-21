@@ -41,7 +41,7 @@ export default class TableManager {
         let rowEl = table.insertRow(location);
         row.forEach((data: sqlData, i: number) => {
             let cell = rowEl.insertCell(i);
-            cell.innerText = data ? data.toString() : 'null';
+            cell.innerText = data ? data.toString() : '';
         });
     }
 

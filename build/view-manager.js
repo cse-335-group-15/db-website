@@ -42,7 +42,6 @@ export default class ViewManager {
         });
     }
     // Run when a view is selected
-    // TODO: Implement form to gather options
     async OnViewPress(view) {
         if (view == this.currentView)
             return;
@@ -62,6 +61,8 @@ export default class ViewManager {
     async FillViewTable(view, options) {
         this.tMan.ClearTable();
         this.currentView = view;
+        const tableHeader = document.getElementById('table-header');
+        tableHeader.innerText = view.name;
         if (options instanceof FormData)
             options = Object.fromEntries(options);
         const data = await this.tMan.GetData(view.endpoint, options);

@@ -28,7 +28,7 @@ export default class TableManager {
         let rowEl = table.insertRow(location);
         row.forEach((data, i) => {
             let cell = rowEl.insertCell(i);
-            cell.innerText = data ? data.toString() : 'null';
+            cell.innerText = data ? data.toString() : '';
         });
     }
     ClearTable() {

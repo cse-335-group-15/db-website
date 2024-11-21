@@ -8,30 +8,34 @@
 </head>
 <body>
     <script type="module" src="./build/index.js"></script>
-    <div id="sidebar">
-        <h1>Views</h1>
+    <div id="container">
+        <div id="sidebar">
+            <h1>Views</h1>
 
-        <div class="view-folder">
-            <h2>Presets</h2>
-            <ul class="view-folder" id="preset-list">
-            </ul>
+            <div class="view-folder">
+                <h2>Presets</h2>
+                <ul class="view-folder" id="preset-list">
+                </ul>
+            </div>
+            <!--
+            <div class="view-folder">
+                <h2>Custom</h2>
+                <ul class="view-folder">
+                    <li><span id="custom-query">Run Custom Query</span></li>
+                    <li><span id="new-view">+ Add New View</span></li>
+                </ul>
+            </div>
+            -->
         </div>
-
-        <div class="view-folder">
-            <h2>Custom</h2>
-            <ul class="view-folder">
-                <li><span id="custom-query">Run Custom Query</span></li>
-                <li><span id="new-view">+ Add New View</span></li>
-            </ul>
+        <div id="table-container">
+            <h1><span id="table-header"></span></h1>
+            <table id="result">
+                <thead>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
-    </div>
-    <div id="table">
-        <table id="result">
-            <thead>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
     </div>
 </body>
 </html>
