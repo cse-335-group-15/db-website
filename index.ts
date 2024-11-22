@@ -5,7 +5,6 @@ import TableManager from './table-manager.js';
 const tableManager: TableManager = new TableManager();
 const viewManager: ViewManager = new ViewManager(tableManager);
 
-
 // TODO:
 //  - Need to handle errors with form submission before closing form
 //  - Need to figure out system to figure out the column headers

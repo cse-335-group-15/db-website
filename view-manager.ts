@@ -5,6 +5,7 @@ import {FormStructure} from "./form.js";
 export type View = {
     name: string;
     endpoint: string;
+    reloadable?: boolean;
     form?: FormStructure
 };
 
@@ -14,8 +15,13 @@ const presets: Array<View> = [
         endpoint: 'cselect'
     },
     {
+        name: "Find Duos",
+        endpoint: 'find_duos'
+    },
+    {
         name: 'Custom Query',
         endpoint: 'query',
+        reloadable: true,
         form: {
             header: 'Custom Query',
             fields : [
@@ -67,7 +73,7 @@ export default class ViewManager {
 
     // Run when a view is selected
     async OnViewPress(view: View) {
-        if (view == this.currentView) return;
+        if (view == this.currentView && !(this.currentView.reloadable ?? false)) return;
         
         if (view.form) {
             const form = view.form ? new Form(view.form) : undefined;
