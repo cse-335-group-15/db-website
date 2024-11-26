@@ -5,7 +5,7 @@ export type FormField = {
     placeholder?: string;
     value?: string
     nullable?: boolean;
-    options?: Array<string>// For radio and select types
+    options?: Array<string> // For select type
 }
 
 export type FormStructure = {
@@ -55,13 +55,22 @@ export default class Form {
             container.appendChild(label);
 
             // Create Field
-            const input = document.createElement('input');
-            input.setAttribute('type', field.type);
+            const input = document.createElement(field.type == 'select' ? 'select' : 'input');
+            if (field.type != 'select') input.setAttribute('type', field.type);
             input.setAttribute('id', id);
             input.setAttribute('name', field.name);
 
             // Do switch for different types of inputs here
-        
+            switch (field.type) {
+                case 'select':
+                    field.options?.forEach((option) => {
+                        const text = document.createElement('option');
+                        text.innerText = option;
+                        (input as HTMLSelectElement).add(text);
+                    });
+            }
+
+
             container.appendChild(input);   
             this.form.appendChild(container);
         });

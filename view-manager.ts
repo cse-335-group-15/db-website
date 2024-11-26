@@ -9,6 +9,7 @@ export type View = {
     form?: FormStructure
 };
 
+// Radio buttons are not supported, use select instead.
 const presets: Array<View> = [
     {
         name: 'Complex Select',
@@ -77,8 +78,8 @@ export default class ViewManager {
         
         if (view.form) {
             const form = view.form ? new Form(view.form) : undefined;
-            // Override form submission
             
+            // Override form submission            
             form?.formRoot.addEventListener('submit', (e) => {
                 const data = new FormData(e.target! as HTMLFormElement);
                 this.FillViewTable(view, data);
@@ -102,7 +103,7 @@ export default class ViewManager {
         if (options instanceof FormData) options = Object.fromEntries(options);
 
         const data = await this.tMan.GetData(view.endpoint, options);
-        this.tMan.SetColumns(data.columns);    
+        this.tMan.SetColumns(data.columns);  
         this.tMan.FillTable(data.data);
     }
 };
