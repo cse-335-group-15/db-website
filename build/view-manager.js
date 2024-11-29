@@ -1,4 +1,5 @@
 import Form from './form.js';
+// Radio buttons are not supported, use select instead.
 const presets = [
     {
         name: 'Complex Select',
@@ -53,7 +54,7 @@ export default class ViewManager {
             return;
         if (view.form) {
             const form = view.form ? new Form(view.form) : undefined;
-            // Override form submission
+            // Override form submission            
             form === null || form === void 0 ? void 0 : form.formRoot.addEventListener('submit', (e) => {
                 const data = new FormData(e.target);
                 this.FillViewTable(view, data);

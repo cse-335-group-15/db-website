@@ -18,7 +18,7 @@ export default class Form {
         header.textContent = this.structure.header;
         this.form.appendChild(header);
         this.structure.fields.forEach((field, i) => {
-            var _a;
+            var _a, _b;
             const id = this.GenerateID();
             const container = document.createElement('p');
             // Create Label
@@ -27,11 +27,20 @@ export default class Form {
             label.textContent = (_a = field.label) !== null && _a !== void 0 ? _a : field.name;
             container.appendChild(label);
             // Create Field
-            const input = document.createElement('input');
-            input.setAttribute('type', field.type);
+            const input = document.createElement(field.type == 'select' ? 'select' : 'input');
+            if (field.type != 'select')
+                input.setAttribute('type', field.type);
             input.setAttribute('id', id);
             input.setAttribute('name', field.name);
             // Do switch for different types of inputs here
+            switch (field.type) {
+                case 'select':
+                    (_b = field.options) === null || _b === void 0 ? void 0 : _b.forEach((option) => {
+                        const text = document.createElement('option');
+                        text.innerText = option;
+                        input.add(text);
+                    });
+            }
             container.appendChild(input);
             this.form.appendChild(container);
         });
