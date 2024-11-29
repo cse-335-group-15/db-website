@@ -11,6 +11,10 @@ export type View = {
 
 const presets: Array<View> = [
     {
+        name: 'full table',
+        endpoint: 'select'
+    },
+    {
         name: 'Complex Select',
         endpoint: 'cselect'
     },
