@@ -1,6 +1,7 @@
 import TableManager from "./table-manager.js";
 import Form from './form.js';
-import {FormStructure} from "./form.js";
+import {FormStructure} from './form.js';
+import {view_presets} from './presets.js';
 
 export type View = {
     name: string;
@@ -9,32 +10,7 @@ export type View = {
     form?: FormStructure
 };
 
-// Radio buttons are not supported, use select instead.
-const presets: Array<View> = [
-    {
-        name: 'Complex Select',
-        endpoint: 'cselect'
-    },
-    {
-        name: "Find Duos",
-        endpoint: 'find_duos'
-    },
-    {
-        name: 'Custom Query',
-        endpoint: 'query',
-        reloadable: true,
-        form: {
-            header: 'Custom Query',
-            fields : [
-                {
-                    name: 'query',
-                    type: 'text',
-                    label: 'Query:'
-                }
-            ]
-        }
-    }
-]
+const presets: Array<View> = [...view_presets]
 
 export default class ViewManager {
     currentView: View;
@@ -82,6 +58,13 @@ export default class ViewManager {
             // Override form submission            
             form?.formRoot.addEventListener('submit', (e) => {
                 const data = new FormData(e.target! as HTMLFormElement);
+
+                // Remove data that shouldn't be sent
+                form.structure.fields.forEach((val) => {
+                    if (!(val.send ?? true) || !(val.visible ?? true)) data.delete(val.name);
+                });
+
+                
                 this.FillViewTable(view, data);
                 e.preventDefault();
                 form.DeleteForm();

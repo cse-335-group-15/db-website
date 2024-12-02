@@ -1,7 +1,7 @@
-let UsedIDs = [];
 export default class Form {
     constructor(structure) {
-        this.formIDs = [];
+        this.formIds = new Map;
+        this.visible_conditions = new Map;
         this.structure = structure;
         this.pageBlocker = document.createElement('div');
         this.pageBlocker.setAttribute('class', 'page-block');
@@ -19,7 +19,7 @@ export default class Form {
         this.form.appendChild(header);
         this.structure.fields.forEach((field, i) => {
             var _a, _b;
-            const id = this.GenerateID();
+            const id = this.GenerateID(field.name);
             const container = document.createElement('p');
             // Create Label
             const label = document.createElement('label');
@@ -32,6 +32,23 @@ export default class Form {
                 input.setAttribute('type', field.type);
             input.setAttribute('id', id);
             input.setAttribute('name', field.name);
+            // Add value listener to all fields
+            input.addEventListener('input', (e) => {
+                let input = e.target;
+                let fieldName = input.getAttribute('name');
+                this.structure.fields.find((val) => { return val.name == fieldName; }).value = input.value;
+            });
+            // Add event listener to updaters
+            if (field.updater) {
+                input.addEventListener('input', this.UpdateForm.bind(this));
+            }
+            // Register visible condition
+            if (field.visible_condition) {
+                this.visible_conditions.set(field.name, field.visible_condition);
+            }
+            if (field.visible == false) {
+                container.setAttribute('hidden', 'true');
+            }
             // Do switch for different types of inputs here
             switch (field.type) {
                 case 'select':
@@ -51,18 +68,42 @@ export default class Form {
         this.form.appendChild(submit);
         // Add Form to page
         document.body.appendChild(this.pageBlocker);
+        // Update Form
+        this.UpdateForm();
     }
-    GenerateID() {
+    UpdateForm() {
+        this.visible_conditions.forEach((callback, key) => {
+            let field = this.structure.fields.find((val) => { return val.name == key; });
+            this.SetFieldVisibility(key, callback(this));
+        });
+    }
+    GetFieldValue(fieldName) {
+        let fieldId = this.formIds.get(fieldName);
+        let fieldEl = document.getElementById(fieldId);
+        return fieldEl.value;
+    }
+    SetFieldVisibility(fieldName, visible) {
+        let field = this.structure.fields.find((val) => { return val.name == fieldName; });
+        if (visible == field.visible)
+            return;
+        let fieldId = this.formIds.get(fieldName);
+        let fieldEl = document.getElementById(fieldId);
+        let container = fieldEl.parentElement;
+        field.visible = visible;
+        if (!field.visible)
+            container.setAttribute('hidden', 'true');
+        else
+            container.removeAttribute('hidden');
+    }
+    GenerateID(fieldName) {
         let id;
         do {
             id = Date.now().toString(36) + Math.random().toString(36).substring(2);
-        } while (id in UsedIDs);
-        UsedIDs.push(id);
-        this.formIDs.push(id);
+        } while (id in this.formIds.values);
+        this.formIds.set(fieldName, id);
         return id;
     }
     DeleteForm() {
-        UsedIDs = UsedIDs.filter((val) => { return !(val in this.formIDs); });
         this.pageBlocker.remove();
     }
 }

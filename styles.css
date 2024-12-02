@@ -70,6 +70,8 @@ th {
 
     padding: 1vh 1vw;
     
+    overflow: scroll;
+    
 }
 
 .page-block {
