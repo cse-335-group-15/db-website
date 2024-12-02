@@ -7,6 +7,10 @@ export const view_presets: Array<View> = [
         endpoint: 'cselect'
     },
     {
+        name: 'Full Table',
+        endpoint: 'select'
+    },
+    {
         name: 'Find Duos',
         endpoint: 'find_duos'
     },
