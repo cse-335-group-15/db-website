@@ -5,6 +5,10 @@ export const view_presets = [
         endpoint: 'cselect'
     },
     {
+        name: 'Full Table',
+        endpoint: 'select'
+    },
+    {
         name: 'Find Duos',
         endpoint: 'find_duos'
     },
