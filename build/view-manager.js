@@ -1,20 +1,31 @@
 import Form from './form.js';
-import { view_presets } from './presets.js';
-const presets = [...view_presets];
+import { view_presets, op_presets } from './presets.js';
 export default class ViewManager {
     constructor(tableManager) {
         this.tMan = tableManager;
         this.LoadPresetViews();
+        this.LoadPresetOperations();
         // Load first preset view to start
-        this.OnViewPress(presets[0]);
-        this.currentView = presets[0];
+        this.OnViewPress(view_presets[0]);
+        this.currentView = view_presets[0];
     }
     // Hope to be able to store custom views on browser but leave this alone for now
     LoadCustomViews() { }
     // Run on window load
     LoadPresetViews() {
-        const listEl = document.getElementById('preset-list');
-        presets.forEach((view, i) => {
+        const listEl = document.getElementById('view-preset-list');
+        view_presets.forEach((view, i) => {
+            const node = document.createElement('li');
+            const span = document.createElement('span');
+            span.innerText = view.name;
+            span.addEventListener('click', this.OnViewPress.bind(this, view));
+            node.appendChild(span);
+            listEl.appendChild(node);
+        });
+    }
+    LoadPresetOperations() {
+        const listEl = document.getElementById('ops-preset-list');
+        op_presets.forEach((view, i) => {
             const node = document.createElement('li');
             const span = document.createElement('span');
             span.innerText = view.name;

@@ -1,7 +1,7 @@
 import TableManager from "./table-manager.js";
 import Form from './form.js';
 import {FormStructure} from './form.js';
-import {view_presets} from './presets.js';
+import {view_presets, op_presets} from './presets.js';
 
 export type View = {
     name: string;
@@ -9,8 +9,6 @@ export type View = {
     reloadable?: boolean;
     form?: FormStructure
 };
-
-const presets: Array<View> = [...view_presets]
 
 export default class ViewManager {
     currentView: View;
@@ -21,10 +19,11 @@ export default class ViewManager {
 
 
         this.LoadPresetViews();
+        this.LoadPresetOperations();
         
         // Load first preset view to start
-        this.OnViewPress(presets[0]);
-        this.currentView = presets[0];
+        this.OnViewPress(view_presets[0]);
+        this.currentView = view_presets[0];
     }
 
     // Hope to be able to store custom views on browser but leave this alone for now
@@ -32,9 +31,24 @@ export default class ViewManager {
 
     // Run on window load
     LoadPresetViews() {
-        const listEl: HTMLUListElement = document.getElementById('preset-list')! as HTMLUListElement;
+        const listEl: HTMLUListElement = document.getElementById('view-preset-list')! as HTMLUListElement;
 
-        presets.forEach((view: View, i: Number) => {
+        view_presets.forEach((view: View, i: Number) => {
+            const node: HTMLLIElement = document.createElement('li');
+            const span: HTMLSpanElement = document.createElement('span');
+            
+            span.innerText = view.name;
+            span.addEventListener('click', this.OnViewPress.bind(this, view));
+
+            node.appendChild(span);
+            listEl.appendChild(node);
+        });
+    }
+
+    LoadPresetOperations() {
+        const listEl: HTMLUListElement = document.getElementById('ops-preset-list')! as HTMLUListElement;
+
+        op_presets.forEach((view: View, i: Number) => {
             const node: HTMLLIElement = document.createElement('li');
             const span: HTMLSpanElement = document.createElement('span');
             

@@ -12,6 +12,8 @@ export const view_presets = [
         name: 'Find Duos',
         endpoint: 'find_duos'
     },
+];
+export const op_presets = [
     {
         name: 'Insert Data',
         endpoint: 'insert',
@@ -23,7 +25,7 @@ export const view_presets = [
                     name: 'table',
                     type: 'select',
                     send: false,
-                    label: 'table',
+                    label: 'Table:',
                     updater: true,
                     options: [
                         'crew',
@@ -158,6 +160,51 @@ export const view_presets = [
                     visible_condition: (form) => { return form.GetFieldValue('table') == 'genres'; },
                     visible: false
                 },
+            ]
+        }
+    },
+    {
+        name: 'Update Review',
+        endpoint: 'update',
+        reloadable: true,
+        form: {
+            header: 'Update Review',
+            fields: [
+                {
+                    name: 'votes',
+                    type: 'text',
+                    label: 'Vote Count:'
+                },
+                {
+                    name: 'score',
+                    type: 'text',
+                    label: 'Score:'
+                },
+                {
+                    name: 'movie_id',
+                    type: 'text',
+                    label: 'Movie ID:'
+                }
+            ]
+        }
+    },
+    {
+        name: 'Delete Movie',
+        endpoint: 'delete',
+        reloadable: true,
+        form: {
+            header: 'Delete Movie',
+            fields: [
+                {
+                    name: 'comparison',
+                    type: 'text',
+                    label: 'Attribute:'
+                },
+                {
+                    name: 'input',
+                    type: 'text',
+                    label: 'Value:'
+                }
             ]
         }
     },
