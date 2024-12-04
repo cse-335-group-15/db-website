@@ -1,12 +1,13 @@
 import TableManager from "./table-manager.js";
 import Form from './form.js';
 import {FormStructure} from './form.js';
-import {view_presets, op_presets} from './presets.js';
+import {view_presets, op_presets, table_presets} from './presets.js';
 
 export type View = {
     name: string;
     endpoint: string;
     reloadable?: boolean;
+    options?: Object;
     form?: FormStructure
 };
 
@@ -19,6 +20,7 @@ export default class ViewManager {
 
 
         this.LoadPresetViews();
+        this.LoadTables();
         this.LoadPresetOperations();
         
         // Load first preset view to start
@@ -34,6 +36,21 @@ export default class ViewManager {
         const listEl: HTMLUListElement = document.getElementById('view-preset-list')! as HTMLUListElement;
 
         view_presets.forEach((view: View, i: Number) => {
+            const node: HTMLLIElement = document.createElement('li');
+            const span: HTMLSpanElement = document.createElement('span');
+            
+            span.innerText = view.name;
+            span.addEventListener('click', this.OnViewPress.bind(this, view));
+
+            node.appendChild(span);
+            listEl.appendChild(node);
+        });
+    }
+
+    LoadTables() {
+        const listEl: HTMLUListElement = document.getElementById('table-list')! as HTMLUListElement;
+
+        table_presets.forEach((view: View, i: Number) => {
             const node: HTMLLIElement = document.createElement('li');
             const span: HTMLSpanElement = document.createElement('span');
             
@@ -100,8 +117,8 @@ export default class ViewManager {
         tableHeader.innerText = view.name
 
         if (options instanceof FormData) options = Object.fromEntries(options);
-
-        const data = await this.tMan.GetData(view.endpoint, options);
+    
+        const data = await this.tMan.GetData(view.endpoint, {...view.options, options});
         const queryBox = document.getElementById('query-box')! as HTMLSpanElement;
 
         queryBox.innerText = data.query;

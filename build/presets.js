@@ -13,6 +13,43 @@ export const view_presets = [
         endpoint: 'find_duos'
     },
 ];
+export const table_presets = [
+    {
+        name: 'Movies',
+        endpoint: 'table',
+        options: {
+            table: 'movies'
+        }
+    },
+    {
+        name: 'Crew',
+        endpoint: 'table',
+        options: {
+            table: 'crew'
+        }
+    },
+    {
+        name: 'Studios',
+        endpoint: 'table',
+        options: {
+            table: 'studios'
+        }
+    },
+    {
+        name: 'Reviews',
+        endpoint: 'table',
+        options: {
+            table: 'reviews'
+        }
+    },
+    {
+        name: 'Genres',
+        endpoint: 'table',
+        options: {
+            table: 'genres'
+        }
+    }
+];
 export const op_presets = [
     {
         name: 'Insert Data',
@@ -164,11 +201,11 @@ export const op_presets = [
         }
     },
     {
-        name: 'Update Data',
+        name: 'Update Entry',
         endpoint: 'update',
         reloadable: true,
         form: {
-            header: 'Update Data',
+            header: 'Update Entry',
             fields: [
                 {
                     name: 'table',
@@ -334,46 +371,28 @@ export const op_presets = [
         }
     },
     {
-        name: 'Update Review',
-        endpoint: 'update',
-        reloadable: true,
-        form: {
-            header: 'Update Review',
-            fields: [
-                {
-                    name: 'votes',
-                    type: 'text',
-                    label: 'Vote Count:'
-                },
-                {
-                    name: 'score',
-                    type: 'text',
-                    label: 'Score:'
-                },
-                {
-                    name: 'movie_id',
-                    type: 'text',
-                    label: 'Movie ID:'
-                }
-            ]
-        }
-    },
-    {
-        name: 'Delete Movie',
+        name: 'Delete Entry',
         endpoint: 'delete',
         reloadable: true,
         form: {
-            header: 'Delete Movie',
+            header: 'Delete Entry',
             fields: [
                 {
-                    name: 'comparison',
-                    type: 'text',
-                    label: 'Attribute:'
+                    name: 'table',
+                    type: 'select',
+                    label: 'Table:',
+                    options: [
+                        'crew',
+                        'movies',
+                        'genres',
+                        'reviews',
+                        'studios'
+                    ]
                 },
                 {
-                    name: 'input',
+                    name: 'id',
                     type: 'text',
-                    label: 'Value:'
+                    label: 'ID:'
                 }
             ]
         }

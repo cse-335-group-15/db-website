@@ -1,9 +1,10 @@
 import Form from './form.js';
-import { view_presets, op_presets } from './presets.js';
+import { view_presets, op_presets, table_presets } from './presets.js';
 export default class ViewManager {
     constructor(tableManager) {
         this.tMan = tableManager;
         this.LoadPresetViews();
+        this.LoadTables();
         this.LoadPresetOperations();
         // Load first preset view to start
         this.OnViewPress(view_presets[0]);
@@ -15,6 +16,17 @@ export default class ViewManager {
     LoadPresetViews() {
         const listEl = document.getElementById('view-preset-list');
         view_presets.forEach((view, i) => {
+            const node = document.createElement('li');
+            const span = document.createElement('span');
+            span.innerText = view.name;
+            span.addEventListener('click', this.OnViewPress.bind(this, view));
+            node.appendChild(span);
+            listEl.appendChild(node);
+        });
+    }
+    LoadTables() {
+        const listEl = document.getElementById('table-list');
+        table_presets.forEach((view, i) => {
             const node = document.createElement('li');
             const span = document.createElement('span');
             span.innerText = view.name;
@@ -68,7 +80,7 @@ export default class ViewManager {
         tableHeader.innerText = view.name;
         if (options instanceof FormData)
             options = Object.fromEntries(options);
-        const data = await this.tMan.GetData(view.endpoint, options);
+        const data = await this.tMan.GetData(view.endpoint, { ...view.options, options });
         const queryBox = document.getElementById('query-box');
         queryBox.innerText = data.query;
         this.tMan.SetColumns(data.columns);

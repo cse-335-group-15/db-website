@@ -160,13 +160,12 @@ export default class Form {
         field.visible = visible;
         if (!field.visible) {
             container.setAttribute('hidden', '');
-            if (!(field.nullable ?? false)) fieldEl.setAttribute('required', '');
+            if (!(field.nullable ?? false)) fieldEl.removeAttribute('required');
         }
         else {
             container.removeAttribute('hidden');
-            if (!(field.nullable ?? false)) fieldEl.removeAttribute('required');
+            if (!(field.nullable ?? false)) fieldEl.setAttribute('required', '');
         }
-        
     }
 
     GenerateID(fieldName: string) {
