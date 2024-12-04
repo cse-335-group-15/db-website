@@ -29,7 +29,7 @@ export default class ViewManager {
     // Hope to be able to store custom views on browser but leave this alone for now
     LoadCustomViews() {}
 
-    // Run on window load
+    // Run on window load. Loads view presets into their folder
     LoadPresetViews() {
         const listEl: HTMLUListElement = document.getElementById('view-preset-list')! as HTMLUListElement;
 
@@ -45,6 +45,7 @@ export default class ViewManager {
         });
     }
 
+    // Run on window load. Loads operation presets into their folder
     LoadPresetOperations() {
         const listEl: HTMLUListElement = document.getElementById('ops-preset-list')! as HTMLUListElement;
 
