@@ -412,11 +412,6 @@ export const op_presets: Array<View> = [
             header: 'Custom Query',
             fields: [
                 {
-                    name: 'info',
-                    type: 'label', 
-                    label: 'foobar'
-                },
-                {
                     name: 'query',
                     type: 'text',
                     label: 'Query:'
