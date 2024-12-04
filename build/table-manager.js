@@ -54,7 +54,9 @@ export default class TableManager {
     ClearTable() {
         const table = document.getElementById('result');
         const tbody = table.getElementsByTagName('tbody')[0];
+        const thead = table.getElementsByTagName('thead')[0];
         tbody.innerHTML = '';
+        thead.innerHTML = '';
     }
 }
 ;

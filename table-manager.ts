@@ -4,7 +4,8 @@ type sqlTable = Array<sqlRow>;
 type sqlColumnData = Array<number | string | boolean | null>;
 type apiResponse = {
     columns: Array<sqlColumnData>;
-    data: sqlTable
+    data: sqlTable;
+    query: string
 }
 
 const url = 'https://iu2mua5qjd.execute-api.us-east-1.amazonaws.com/prod/gwdeib01';
@@ -78,7 +79,9 @@ export default class TableManager {
     ClearTable() {
         const table = document.getElementById('result') as HTMLTableElement;
         const tbody = table.getElementsByTagName('tbody')[0] as HTMLTableSectionElement;
+        const thead = table.getElementsByTagName('thead')[0] as HTMLTableSectionElement;
 
         tbody.innerHTML = '';
+        thead.innerHTML = '';
     }
 };

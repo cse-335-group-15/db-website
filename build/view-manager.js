@@ -67,6 +67,8 @@ export default class ViewManager {
         if (options instanceof FormData)
             options = Object.fromEntries(options);
         const data = await this.tMan.GetData(view.endpoint, options);
+        const queryBox = document.getElementById('query-box');
+        queryBox.innerText = data.query;
         this.tMan.SetColumns(data.columns);
         this.tMan.FillTable(data.data);
     }
