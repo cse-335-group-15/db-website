@@ -63,6 +63,7 @@ export default class Form {
             if (field.type != 'select') input.setAttribute('type', field.type);
             input.setAttribute('id', id);
             input.setAttribute('name', field.name);
+
             
             // Add value listener to all fields
             input.addEventListener('input', (e) => {
@@ -105,6 +106,14 @@ export default class Form {
         submit.setAttribute('type', 'submit');
         submit.textContent = 'Submit';
         this.form.appendChild(submit);
+
+        // Create cancel button
+        const cancel = document.createElement('button');
+        cancel.textContent = 'Cancel';
+        cancel.addEventListener('click', (e) => {
+            this.DeleteForm();
+        });
+        this.form.appendChild(cancel);
         
         // Add Form to page
         document.body.appendChild(this.pageBlocker);

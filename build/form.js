@@ -66,6 +66,13 @@ export default class Form {
         submit.setAttribute('type', 'submit');
         submit.textContent = 'Submit';
         this.form.appendChild(submit);
+        // Create cancel button
+        const cancel = document.createElement('button');
+        cancel.textContent = 'Cancel';
+        cancel.addEventListener('click', (e) => {
+            this.DeleteForm();
+        });
+        this.form.appendChild(cancel);
         // Add Form to page
         document.body.appendChild(this.pageBlocker);
         // Update Form
