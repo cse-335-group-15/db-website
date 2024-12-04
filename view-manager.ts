@@ -72,16 +72,16 @@ export default class ViewManager {
             
             // Override form submission            
             form?.formRoot.addEventListener('submit', (e) => {
+                e.preventDefault();
                 const data = new FormData(e.target! as HTMLFormElement);
 
                 // Remove data that shouldn't be sent
-                form.structure.fields.forEach((val) => {
-                    if (!(val.send ?? true) || !(val.visible ?? true)) data.delete(val.name);
+                form.structure.fields.forEach((field) => {
+                    if (!(field.send ?? true) || !(field.visible ?? true)) data.delete(field.name);
                 });
 
                 
                 this.FillViewTable(view, data);
-                e.preventDefault();
                 form.DeleteForm();
             });
 

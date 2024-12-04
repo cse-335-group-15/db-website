@@ -18,7 +18,7 @@ export default class Form {
         header.textContent = this.structure.header;
         this.form.appendChild(header);
         this.structure.fields.forEach((field, i) => {
-            var _a, _b;
+            var _a, _b, _c, _d;
             const id = this.GenerateID(field.name);
             const container = document.createElement('p');
             // Create Label
@@ -30,6 +30,8 @@ export default class Form {
             const input = document.createElement(field.type == 'select' ? 'select' : 'input');
             if (field.type != 'select')
                 input.setAttribute('type', field.type);
+            if (((_b = field.nullable) !== null && _b !== void 0 ? _b : true) && ((_c = field.visible) !== null && _c !== void 0 ? _c : true))
+                input.setAttribute('required', '');
             input.setAttribute('id', id);
             input.setAttribute('name', field.name);
             // Add value listener to all fields
@@ -52,7 +54,7 @@ export default class Form {
             // Do switch for different types of inputs here
             switch (field.type) {
                 case 'select':
-                    (_b = field.options) === null || _b === void 0 ? void 0 : _b.forEach((option) => {
+                    (_d = field.options) === null || _d === void 0 ? void 0 : _d.forEach((option) => {
                         const text = document.createElement('option');
                         text.innerText = option;
                         input.add(text);
@@ -90,6 +92,7 @@ export default class Form {
         return fieldEl.value;
     }
     SetFieldVisibility(fieldName, visible) {
+        var _a, _b;
         let field = this.structure.fields.find((val) => { return val.name == fieldName; });
         if (visible == field.visible)
             return;
@@ -97,10 +100,16 @@ export default class Form {
         let fieldEl = document.getElementById(fieldId);
         let container = fieldEl.parentElement;
         field.visible = visible;
-        if (!field.visible)
-            container.setAttribute('hidden', 'true');
-        else
+        if (!field.visible) {
+            container.setAttribute('hidden', '');
+            if (!((_a = field.nullable) !== null && _a !== void 0 ? _a : false))
+                fieldEl.setAttribute('required', '');
+        }
+        else {
             container.removeAttribute('hidden');
+            if (!((_b = field.nullable) !== null && _b !== void 0 ? _b : false))
+                fieldEl.removeAttribute('required');
+        }
     }
     GenerateID(fieldName) {
         let id;

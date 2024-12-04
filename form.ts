@@ -1,14 +1,14 @@
 export type FormField = {
     type: string; // The HTML form type. Should just need text, select, or checkbox
-    name: string; // Name of field, should be the same here as it is in the API
-    label?: string; // Label next to field on form
-    placeholder?: string; // Placeholder for text type
-    value?: string // Current value of the field. Assign to make a default value
-    nullable?: boolean; // Empty field allowed. Ignored if visible is false.
-    options?: Array<string>; // For select type
-    visible_condition?: (Form: Form) => boolean; // Use this to hide the field under certain conditions
+    name: string; // Name of field, should be the same here as it is in the API. Must be unique within the form.
+    label?: string; // Label next to field on form.
+    placeholder?: string; // Placeholder for text type. (Not Functional)
+    value?: string // Current value of the field. Assign to make a default value.
+    nullable?: boolean; // Empty field allowed. Ignored if visible is false. False by default.
+    options?: Array<string>; // For select type.
+    visible_condition?: (Form: Form) => boolean; // Use this to hide the field under certain conditions.
     visible?: boolean // Indicates if the field is currently visible or not. True by default
-    send?: boolean // Controls if the field is sent to the API. Ignored if visible is false.
+    send?: boolean // Controls if the field is sent to the API. Ignored if visible is false. False by default.
     updater?: boolean // Controls whether or not the form should update on its change. False by default.
 }
 
@@ -41,7 +41,7 @@ export default class Form {
         this.GenerateForm();
     }
 
-    GenerateForm () {
+    GenerateForm() {
         this.form.innerHTML = '';
         
         const header = document.createElement('h1');
@@ -54,13 +54,17 @@ export default class Form {
 
             // Create Label
             const label = document.createElement('label');
+            
             label.setAttribute('for', id);
             label.textContent = field.label ?? field.name;
             container.appendChild(label);
 
             // Create Field
             const input = document.createElement(field.type == 'select' ? 'select' : 'input');
+            
             if (field.type != 'select') input.setAttribute('type', field.type);
+            if ((field.nullable ?? true) && (field.visible ?? true)) input.setAttribute('required', '');
+
             input.setAttribute('id', id);
             input.setAttribute('name', field.name);
 
@@ -145,8 +149,14 @@ export default class Form {
         let container = fieldEl.parentElement!;
         
         field.visible = visible;
-        if (!field.visible) container.setAttribute('hidden', 'true');
-        else container.removeAttribute('hidden');
+        if (!field.visible) {
+            container.setAttribute('hidden', '');
+            if (!(field.nullable ?? false)) fieldEl.setAttribute('required', '');
+        }
+        else {
+            container.removeAttribute('hidden');
+            if (!(field.nullable ?? false)) fieldEl.removeAttribute('required');
+        }
         
     }
 

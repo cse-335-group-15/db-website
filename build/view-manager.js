@@ -44,15 +44,15 @@ export default class ViewManager {
             const form = view.form ? new Form(view.form) : undefined;
             // Override form submission            
             form === null || form === void 0 ? void 0 : form.formRoot.addEventListener('submit', (e) => {
+                e.preventDefault();
                 const data = new FormData(e.target);
                 // Remove data that shouldn't be sent
-                form.structure.fields.forEach((val) => {
+                form.structure.fields.forEach((field) => {
                     var _a, _b;
-                    if (!((_a = val.send) !== null && _a !== void 0 ? _a : true) || !((_b = val.visible) !== null && _b !== void 0 ? _b : true))
-                        data.delete(val.name);
+                    if (!((_a = field.send) !== null && _a !== void 0 ? _a : true) || !((_b = field.visible) !== null && _b !== void 0 ? _b : true))
+                        data.delete(field.name);
                 });
                 this.FillViewTable(view, data);
-                e.preventDefault();
                 form.DeleteForm();
             });
             return;
