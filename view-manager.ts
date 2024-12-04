@@ -5,6 +5,7 @@ import {view_presets, op_presets, table_presets} from './presets.js';
 
 export type View = {
     name: string;
+    description?: string;
     endpoint: string;
     reloadable?: boolean;
     options?: Object;
@@ -114,7 +115,9 @@ export default class ViewManager {
         this.currentView = view;
 
         const tableHeader = document.getElementById('table-header') as HTMLSpanElement;
-        tableHeader.innerText = view.name
+        const tableDescription = document.getElementById('view-description') as HTMLSpanElement;
+        tableHeader.innerText = view.name;
+        tableDescription.innerText = view.description ?? '';
 
         if (options instanceof FormData) options = Object.fromEntries(options);
     

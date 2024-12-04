@@ -74,10 +74,13 @@ export default class ViewManager {
         this.FillViewTable(view);
     }
     async FillViewTable(view, options) {
+        var _a;
         this.tMan.ClearTable();
         this.currentView = view;
         const tableHeader = document.getElementById('table-header');
+        const tableDescription = document.getElementById('view-description');
         tableHeader.innerText = view.name;
+        tableDescription.innerText = (_a = view.description) !== null && _a !== void 0 ? _a : '';
         if (options instanceof FormData)
             options = Object.fromEntries(options);
         const data = await this.tMan.GetData(view.endpoint, { ...view.options, options });

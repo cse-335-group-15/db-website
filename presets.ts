@@ -3,16 +3,19 @@ import {View} from './view-manager.js'
 // Radio buttons are not supported, use select instead.
 export const view_presets: Array<View> = [
     {
-        name: 'Complex Select',
-        endpoint: 'cselect'
+        name: 'Top movies',
+        endpoint: 'cselect',
+        description: 'All movies with better reviews than the average.'
     },
     {
         name: 'Full Table',
-        endpoint: 'select'
+        endpoint: 'select',
+        description: 'Every movie and all their relevant information.'
     },
     {
         name: 'Find Duos',
-        endpoint: 'find_duos'
+        endpoint: 'find_duos',
+        description: 'Directors and stars that work together.'
     },
 ]
 
