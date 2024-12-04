@@ -1,5 +1,5 @@
 export type FormField = {
-    type: string; // The HTML form type. Should just need text, select, or checkbox
+    type: string; // The HTML form type. Should just need text, select, or checkbox. Can also use label to just add a message.
     name: string; // Name of field, should be the same here as it is in the API. Must be unique within the form.
     label?: string; // Label next to field on form.
     placeholder?: string; // Placeholder for text type. (Not Functional)
@@ -8,7 +8,7 @@ export type FormField = {
     options?: Array<string>; // For select type.
     visible_condition?: (Form: Form) => boolean; // Use this to hide the field under certain conditions.
     visible?: boolean // Indicates if the field is currently visible or not. True by default
-    send?: boolean // Controls if the field is sent to the API. Ignored if visible is false. False by default.
+    send?: boolean // Controls if the field is sent to the API. Ignored if visible is false or if type is 'label'. True by default.
     updater?: boolean // Controls whether or not the form should update on its change. False by default.
 }
 
@@ -60,6 +60,15 @@ export default class Form {
             container.appendChild(label);
 
             // Create Field
+            if (field.type == 'label') {
+                const label = document.createElement('p');
+                label.innerText = field.label ?? '';
+
+                this.form.appendChild(label);
+                return;
+            }
+
+
             const input = document.createElement(field.type == 'select' ? 'select' : 'input');
             
             if (field.type != 'select') input.setAttribute('type', field.type);

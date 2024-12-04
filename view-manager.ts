@@ -78,6 +78,7 @@ export default class ViewManager {
                 // Remove data that shouldn't be sent
                 form.structure.fields.forEach((field) => {
                     if (!(field.send ?? true) || !(field.visible ?? true)) data.delete(field.name);
+                    if (field.type == 'label') data.delete(field.name);
                 });
 
                 
