@@ -24,6 +24,7 @@ export default class ViewManager {
             listEl.appendChild(node);
         });
     }
+    // Run on window load. Loads table presets into their folder
     LoadTables() {
         const listEl = document.getElementById('table-list');
         table_presets.forEach((view, i) => {
@@ -83,7 +84,7 @@ export default class ViewManager {
         tableDescription.innerText = (_a = view.description) !== null && _a !== void 0 ? _a : '';
         if (options instanceof FormData)
             options = Object.fromEntries(options);
-        const data = await this.tMan.GetData(view.endpoint, { ...view.options, options });
+        const data = await this.tMan.GetData(view.endpoint, { ...view.options, ...options });
         const queryBox = document.getElementById('query-box');
         queryBox.innerText = data.query;
         this.tMan.SetColumns(data.columns);

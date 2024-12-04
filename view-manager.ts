@@ -48,6 +48,7 @@ export default class ViewManager {
         });
     }
 
+    // Run on window load. Loads table presets into their folder
     LoadTables() {
         const listEl: HTMLUListElement = document.getElementById('table-list')! as HTMLUListElement;
 
@@ -78,8 +79,6 @@ export default class ViewManager {
             listEl.appendChild(node);
         });
     }
-
-    
 
     // Run when a view is selected
     async OnViewPress(view: View) {
@@ -121,7 +120,7 @@ export default class ViewManager {
 
         if (options instanceof FormData) options = Object.fromEntries(options);
     
-        const data = await this.tMan.GetData(view.endpoint, {...view.options, options});
+        const data = await this.tMan.GetData(view.endpoint, {...view.options, ...options});
         const queryBox = document.getElementById('query-box')! as HTMLSpanElement;
 
         queryBox.innerText = data.query;
