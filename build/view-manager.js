@@ -51,6 +51,8 @@ export default class ViewManager {
                     var _a, _b;
                     if (!((_a = field.send) !== null && _a !== void 0 ? _a : true) || !((_b = field.visible) !== null && _b !== void 0 ? _b : true))
                         data.delete(field.name);
+                    if (field.type == 'label')
+                        data.delete(field.name);
                 });
                 this.FillViewTable(view, data);
                 form.DeleteForm();

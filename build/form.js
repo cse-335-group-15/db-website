@@ -18,7 +18,7 @@ export default class Form {
         header.textContent = this.structure.header;
         this.form.appendChild(header);
         this.structure.fields.forEach((field, i) => {
-            var _a, _b, _c, _d;
+            var _a, _b, _c, _d, _e;
             const id = this.GenerateID(field.name);
             const container = document.createElement('p');
             // Create Label
@@ -27,10 +27,16 @@ export default class Form {
             label.textContent = (_a = field.label) !== null && _a !== void 0 ? _a : field.name;
             container.appendChild(label);
             // Create Field
+            if (field.type == 'label') {
+                const label = document.createElement('p');
+                label.innerText = (_b = field.label) !== null && _b !== void 0 ? _b : '';
+                this.form.appendChild(label);
+                return;
+            }
             const input = document.createElement(field.type == 'select' ? 'select' : 'input');
             if (field.type != 'select')
                 input.setAttribute('type', field.type);
-            if (((_b = field.nullable) !== null && _b !== void 0 ? _b : true) && ((_c = field.visible) !== null && _c !== void 0 ? _c : true))
+            if (((_c = field.nullable) !== null && _c !== void 0 ? _c : true) && ((_d = field.visible) !== null && _d !== void 0 ? _d : true))
                 input.setAttribute('required', '');
             input.setAttribute('id', id);
             input.setAttribute('name', field.name);
@@ -54,7 +60,7 @@ export default class Form {
             // Do switch for different types of inputs here
             switch (field.type) {
                 case 'select':
-                    (_d = field.options) === null || _d === void 0 ? void 0 : _d.forEach((option) => {
+                    (_e = field.options) === null || _e === void 0 ? void 0 : _e.forEach((option) => {
                         const text = document.createElement('option');
                         text.innerText = option;
                         input.add(text);
